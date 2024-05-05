@@ -1,0 +1,53 @@
+﻿<Window x:Class="GLOproject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:GLOproject.ViewModels"
+        xmlns:cm="clr-namespace:GLOproject.Commands"
+        xmlns:local="clr-namespace:GLOproject.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Login" Margin="2" Command="{Binding ChangeViewModelCommand}" CommandParameter="LoginVewModel"/>
+                <Button Content="ПВЗ" Margin="2"  Command="{Binding ChangeViewModelCommand}" CommandParameter="PickUpViewModel"/>
+                <Button Content="Продукты" Margin="2"  Command="{Binding ChangeViewModelCommand}" CommandParameter="ProductViewModel"/>
+                <Button Content="Статистика" Margin="2"  Command="{Binding ChangeViewModelCommand}" CommandParameter="StatsViewModel"/>
+            </StackPanel>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Пользователь: {0}, Роль {1}">
+                        <Binding Path="CurrentEmployee.Name"/>
+                        <Binding Path="CurrentEmployee.Role.Name"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vm:LoginVewModel}">
+                    <local:LoginControl/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:PickUpViewModel}">
+                    <local:PickUpControl/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:ProductViewModel}">
+                    <local:ProductControl/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:StatsViewModel}">
+                    <local:StatsControl/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+    </Grid>
+</Window>
